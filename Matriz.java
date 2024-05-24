@@ -83,7 +83,7 @@ public class Matriz {
             // A análise é feita sempre na linha da cidade de origem, visto que, a cidade de origem é seu objetivo
             analisado = matriz[origem][x];
 
-            // Se a cidade não foi visitada ainda ela é um destino valido
+            // Se a cidade não foi visitada ainda, ela é um destino valido
             if(naoVisitadas.contains(x))
             {
                 // Se for a primeira iteração do loop
