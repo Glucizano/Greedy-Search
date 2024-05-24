@@ -59,11 +59,11 @@ public class Matriz {
     public int[] Viagem(int[][] matriz, int atual, ArrayList<Integer>naoVisitadas, boolean ultimaCidade, int origem)
     {
         boolean primeira = true;
-        int menorDistancia = 0;
-        int distancia = 0;
-        int x = 0;
+        int analisado = 0;
+        int maisProximoOrigem = 0;
         int[] resposta = new int[2];
         int destino = 0;
+        int distancia = 0;
 
         if(ultimaCidade)
         {
@@ -72,57 +72,33 @@ public class Matriz {
             return resposta;
         }
 
-        for(x=1;x<linhas;x++)
+        for(int x=1; x<linhas; x++)
         {
-            int analisado = matriz[origem][x];
+            analisado = matriz[origem][x];
 
-            if(analisado != 0)
+            if(naoVisitadas.contains(x))
             {
-                if(primeira)
+                if (primeira)
                 {
-                    // Caso ja tenha sido visitado
-                    if(!naoVisitadas.contains(x))
-                    {
-                        if(x+1<= linhas)
-                        {
-                            menorDistancia = matriz[origem][x+1];
-                            distancia = matriz[x+1][atual];
-                            destino = x+1;
-                        }else
-                        {
-                            menorDistancia = matriz[origem][x-1];
-                            distancia = matriz[x-1][atual];
-                            destino = x-1;
-                        }
-                    }else // Não foi visitado
-                    {
-                        menorDistancia = analisado;
-                        distancia = matriz[x][atual];
-                        destino = x;
-
-                    }
+                    maisProximoOrigem = analisado;
                     primeira = false;
-                }else
+                    destino = x;
+                    distancia = matriz[x][atual];
+                }
+
+                if(analisado <= maisProximoOrigem)
                 {
-                    if(analisado <= menorDistancia)
-                    {
-                        if(naoVisitadas.contains(x))
-                        {
-                            menorDistancia = analisado;
-                            destino = x;
-                            resposta[0] = x;
-                            resposta[1] = distancia;
-                            return resposta;
-                        }else
-                        {
-                            primeira = true;
-                        }
-                    }
+                    maisProximoOrigem = analisado;
+                    destino = x;
+                    distancia = matriz[x][atual];
                 }
             }
         }
+
         resposta[0] = destino;
-        resposta[1] = distancia;
+        resposta [1] = distancia;
+
         return resposta;
+
     }
 }
