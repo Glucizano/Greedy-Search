@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Main
 {
-    public static String caminho = "C:\\Users\\gabriel.lucizano\\Documents\\aaIA\\abc2.txt";
+    public static String caminho = "C:\\Users\\gabriel.lucizano\\Documents\\aaIA\\abc.txt";
 
     public static void main(String[] args) throws IOException
     {
@@ -14,7 +14,7 @@ public class Main
         int distanciaPercorrida = 0;
         // Criando um objeto minhaMatriz da classe Matriz
         Matriz minhaMatriz = new Matriz();
-        // Variavel matriz vai receber a matriz gerada pelo método GeraMatriz
+        // Variavel matriz vai receber a matriz gerada pelo método GeraMatriz que recebe o caminho do arquivo com argumento
         int[][] matriz = minhaMatriz.GeraMatriz(caminho);
         // Lista de cidades não visitadas pelo caixeiro
         ArrayList <Integer> naoVisitadas = new ArrayList<>();
@@ -27,11 +27,12 @@ public class Main
         // Cria o objeto scanner da classe Scanner que vai ler os dados digitados do usuario
         Scanner scanner = new Scanner(System.in);
 
-        // Pergunta para o usuário qual cidade começar e armazena na variável origem
+        // Pergunta para o usuário qual cidade começar
         System.out.println("Por qual cidade começar? ");
+        // Armazena o que o usuário digitou na variável origem
         int origem = scanner.nextInt();
 
-        // remove a origem da lista de não visitadas
+        // Remove a origem da lista de não visitadas
         naoVisitadas.remove(Integer.valueOf(origem));
 
         // Variável atual se refere a onde o caixeiro está atualmente, e inicialmente tem o valor de origem
@@ -53,26 +54,21 @@ public class Main
                 atual = resposta[0];
                 // Soma a distância percorrida (resposta[1]) ao valor total (distanciaPercorrida)
                 distanciaPercorrida = distanciaPercorrida + resposta[1];
-                System.out.println("Cheguei na cidade "+atual);
-                System.out.println("A cidade "+origem+" é minha cidade de origem. Encerrei minha jornada");
-                System.out.println("\n======== Percorri a distancia: "+distanciaPercorrida+" ========");
+                System.out.println("Voltei para a cidade "+origem+", minha cidade de origem. Percorri a distancia "+resposta[1]);
+                System.out.println("\n======== Distancia total percorrida: "+distanciaPercorrida+" ========");
                 break;
             }
-            // Caixeiro vai para a cidade mais próxima
+            // Caxeiro vai fazer uma viagem e o metodo Viagem vai escolher uma cidade que ainda não foi visitada e a mais proxima do objetivo
             resposta = minhaMatriz.Viagem(matriz, atual, naoVisitadas, false, origem);
+            // Agora a cidade atual do caixeiro é a resposta[0]
             atual = resposta[0];
+            // É somado no total da distancia percorrida a distancia que o caixeiro percorreu até essa cidade
             distanciaPercorrida = distanciaPercorrida + resposta[1];
 
+            // É removida da lista de cidades não visitadas a cidade atual
             naoVisitadas.remove(Integer.valueOf(atual));
-            // Imprime na tela a cidade para qual foi
-            System.out.println("Cheguei na cidade "+atual);
-
-            // Se a cidade atual for igual a de origem antes da lista de cidades não visitados esvaziar, então é um erro
-            if(atual == origem)
-            {
-                System.out.println("Erro: cheguei ao meu destino antecipadamente");
-                break;
-            }
+            // Imprime na tela a cidade para qual foi e a distancia percorrida
+            System.out.println("Cheguei na cidade "+atual+ ". Percorri a distancia: "+resposta[1]);
         }
     }
 }
